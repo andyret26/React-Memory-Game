@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "eslint-config-prettier"
+  ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "plugins": [
+    "eslint-plugin-react",
+    "eslint-plugin-import",
+    "eslint-plugin-prettier"
+  ],
+  "rules": {
+    "react/jsx-props-no-spreading": "off"
+  }
+}
