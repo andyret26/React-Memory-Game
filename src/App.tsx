@@ -24,13 +24,17 @@ function App() {
   }
 
   function resetSelectedCards(newSelectedCards: Array<CardType>) {
-    const newList = [...cards];
-    newSelectedCards.forEach((selectedCard) => {
-      const index = newList.findIndex((card) => selectedCard.id === card.id);
-      newList[index].fliped = false;
-    });
-
-    setCards(newList);
+    setCards((prevCards) =>
+      prevCards.map((card) => {
+        if (
+          newSelectedCards.some((selectedCard) => selectedCard.id === card.id)
+        ) {
+          return { ...card, fliped: false };
+        } else {
+          return card;
+        }
+      })
+    );
     setSelectedCards([]);
   }
 
