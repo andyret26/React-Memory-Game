@@ -2,7 +2,6 @@ import Card from "./components/Card";
 import flagCodes from "./assets/flagCodes.json";
 import { CardType } from "./types";
 import { useState } from "react";
-import { splitVendorChunkPlugin } from "vite";
 
 function App() {
   const [cards, setCards] = useState<Array<CardType>>([]);
@@ -53,7 +52,7 @@ function App() {
     if (newSelectedList[0].pair !== newSelectedList[1].pair) {
       setTimeout(() => {
         resetSelectedCards(newSelectedList);
-      }, 1000);
+      }, 1500);
     }
     setSelectedCards([]);
   }
@@ -65,9 +64,7 @@ function App() {
       ) : (
         <div className="board">
           {cards.map((card, index) => (
-            <button key={index} onClick={() => handleClickCard(card, index)}>
-              <Card card={card} />
-            </button>
+            <Card card={card} index={index} handleClickCard={handleClickCard} />
           ))}
         </div>
       )}
