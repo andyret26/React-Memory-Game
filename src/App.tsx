@@ -1,13 +1,29 @@
 import Card from "./components/Card";
 import flagCodes from "./assets/flagCodes.json";
 import { CardType } from "./types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
   const [cards, setCards] = useState<Array<CardType>>([]);
   const [selectedCards, setSelectedCards] = useState<Array<CardType>>([]);
   const [started, setStarted] = useState(false);
   const [score, setScore] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+
+  useEffect(() => {
+    let interval1: number;
+    if (started) {
+      interval1 = setInterval(() => {
+        setSeconds((currentS) => currentS + 1);
+        if (seconds === 59) {
+          setSeconds(0);
+          setMinutes((currentM) => currentM + 1);
+        }
+      }, 1000);
+    }
+    return () => clearInterval(interval1);
+  });
 
   function handleStart() {
     const boardSize = 4;
@@ -70,6 +86,16 @@ function App() {
           <div className="score">
             <p>SCORE: </p>
             <p>{score}</p>
+            <p className="timer">
+              timer:
+              {minutes.toLocaleString(undefined, {
+                minimumIntegerDigits: 2,
+              })}
+              :
+              {seconds.toLocaleString(undefined, {
+                minimumIntegerDigits: 2,
+              })}
+            </p>
           </div>
         )}
       </div>
@@ -81,7 +107,12 @@ function App() {
       ) : (
         <div className="board">
           {cards.map((card, index) => (
-            <Card card={card} index={index} handleClickCard={handleClickCard} />
+            <Card
+              key={card.id}
+              card={card}
+              index={index}
+              handleClickCard={handleClickCard}
+            />
           ))}
         </div>
       )}
