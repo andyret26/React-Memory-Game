@@ -1,3 +1,4 @@
+import "./Card.css";
 import { CardType } from "../types";
 
 interface Props {
@@ -8,7 +9,7 @@ interface Props {
 
 export default function Card({ card, index, handleClickCard }: Props) {
   return (
-    <button onClick={() => handleClickCard(card, index)}>
+    <button className="btn-card" onClick={() => handleClickCard(card, index)}>
       <div className="card-container">
         <div className={card.fliped ? "card flip" : "card"}>
           <div className="face card-front">

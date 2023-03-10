@@ -7,6 +7,7 @@ function App() {
   const [cards, setCards] = useState<Array<CardType>>([]);
   const [selectedCards, setSelectedCards] = useState<Array<CardType>>([]);
   const [started, setStarted] = useState(false);
+  const [score, setScore] = useState(0);
 
   function handleStart() {
     const boardSize = 4;
@@ -53,14 +54,30 @@ function App() {
       setTimeout(() => {
         resetSelectedCards(newSelectedList);
       }, 1500);
+    } else {
+      const newScore = score + 1;
+      setScore(newScore);
     }
     setSelectedCards([]);
   }
 
   return (
     <div className="App">
+      <div className="top-bar">
+        {!started ? (
+          <p>WELCOME</p>
+        ) : (
+          <div className="score">
+            <p>SCORE: </p>
+            <p>{score}</p>
+          </div>
+        )}
+      </div>
+
       {!started ? (
-        <button onClick={() => handleStart()}>start</button>
+        <button className="btn-start" onClick={() => handleStart()}>
+          <p>START GAME</p>
+        </button>
       ) : (
         <div className="board">
           {cards.map((card, index) => (

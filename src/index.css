@@ -1,62 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 :root {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 24px;
   display: flex;
   justify-content: center;
+  text-align: center;
+  background-image: url(/src/assets/761506.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+}
+
+
+p {
+  margin: 0;
+}
+
+
+button:hover {
+  cursor: pointer;
+}
+
+button {
+  font-size: inherit;
+  font-family: inherit;
+  padding: 5px;
+  border: 2px solid black;
+  background-color: unset;
+}
+
+.top-bar {
+  width: 90vw;
+  margin-top: 30px;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+  border-bottom: 3px solid black;
+}
+
+.score {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.btn-start:hover {
+  background-color: rgb(170, 170, 170);
+}
+.btn-start {
+  font-size: 12px;
+  padding: 15px;
+  border: 2px solid rgb(140, 140, 140);
+  border-radius: 10px;
+  background-color: rgb(200, 200, 200);
+}
+
+.btn-start > p {
+  margin: 0;
 }
 
 .board {
   display: grid;
-  grid-template-columns: repeat(2, 100px);
-  grid-template-rows: repeat(2, 100px);
+  grid-template-columns: repeat(2, auto);
+  grid-template-rows: repeat(2, auto);
   row-gap: 10px;
   column-gap: 10px;
+  justify-content: center;
 }
 
-.board > button {
-  padding: 0;
-  border: 0;
-  background-color: unset;
-}
 
-.card-container {
-  width: 100%;
-  height: 100%;
-  perspective: 1000px;
-}
-
-.card {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transform-style: preserve-3d;
-  transition: transform 1s;
-
-}
-
-.flip {
-  transform: rotateY(180deg);
-}
-
-.card-front, .card-back {
-  width: 100%;
-  height: 100%;
-  position: absolute;
- -webkit-backface-visibility: hidden;
- backface-visibility: hidden;
-}
-
-.card .card-front {
-  background-color: aqua;
-  background-repeat: no-repeat;
-  background-size: contain;
-  transform: rotateY(180deg);
-}
-
-.card .card-back {
-  background-image: url("/src/assets/Europe.jpg");
-  /* background-color: rebeccapurple; */
-  background-repeat: no-repeat;
-  background-size: contain;
-}
 
 
 
