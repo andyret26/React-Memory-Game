@@ -1,32 +1,30 @@
-import Card from "./components/Card";
-import flagCodes from "./assets/flagCodes.json";
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React from "react";
 import { CardType } from "./types";
+import Card from "./components/Card";
+import Timer from "./components/Timer";
 import { useEffect, useState } from "react";
+import flagCodes from "./assets/flagCodes.json";
+import { useTimer } from "react-use-precision-timer";
 
 function App() {
   const [cards, setCards] = useState<Array<CardType>>([]);
   const [selectedCards, setSelectedCards] = useState<Array<CardType>>([]);
   const [started, setStarted] = useState(false);
   const [score, setScore] = useState(0);
+  const [victory, setVictory] = useState(false);
   const [seconds, setSeconds] = useState(0);
-  const [minutes, setMinutes] = useState(0);
 
-  useEffect(() => {
-    let interval1: number;
-    if (started) {
-      interval1 = setInterval(() => {
-        setSeconds((currentS) => currentS + 1);
-        if (seconds === 59) {
-          setSeconds(0);
-          setMinutes((currentM) => currentM + 1);
-        }
-      }, 1000);
-    }
-    return () => clearInterval(interval1);
-  });
+  const timerRunning = React.useCallback(() => {
+    const runTimeSeconds = Math.floor(timer.getElapsedRunningTime() / 1000);
+    setSeconds(runTimeSeconds);
+  }, []);
+  // The callback will be called every 1000 milliseconds / 1s.
+  const timer = useTimer({ delay: 1000 }, timerRunning);
 
   function handleStart() {
     const boardSize = 4;
+
     for (let i = 0; i < boardSize; i++) {
       const newCard = {
         id: crypto.randomUUID(),
@@ -35,7 +33,9 @@ function App() {
         fliped: false,
       };
       cards.push(newCard);
+      // TODO: shuffle cards
       setStarted(true);
+      timer.start();
     }
   }
 
@@ -73,8 +73,26 @@ function App() {
     } else {
       const newScore = score + 1;
       setScore(newScore);
+
+      if (newScore >= Math.floor(cards.length / 2)) {
+        setVictory(true);
+        timer.stop();
+      }
     }
     setSelectedCards([]);
+  }
+
+  function handleReset(): void {
+    setCards((prevCards) =>
+      prevCards.map((card) => {
+        return { ...card, fliped: false };
+      })
+    );
+    // TODO: shuffle cards
+    setVictory(false);
+    setScore(0);
+    setSeconds(0);
+    timer.start();
   }
 
   return (
@@ -86,16 +104,7 @@ function App() {
           <div className="score">
             <p>SCORE: </p>
             <p>{score}</p>
-            <p className="timer">
-              timer:
-              {minutes.toLocaleString(undefined, {
-                minimumIntegerDigits: 2,
-              })}
-              :
-              {seconds.toLocaleString(undefined, {
-                minimumIntegerDigits: 2,
-              })}
-            </p>
+            <Timer seconds={seconds} />
           </div>
         )}
       </div>
@@ -115,6 +124,16 @@ function App() {
             />
           ))}
         </div>
+      )}
+      {victory ? (
+        <div className="victory-box">
+          <p>VICTORY!!</p>
+          <button className="btn-reset" onClick={() => handleReset()}>
+            reset
+          </button>
+        </div>
+      ) : (
+        <p></p>
       )}
     </div>
   );

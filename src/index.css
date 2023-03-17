@@ -9,7 +9,10 @@
   background-image: url(/src/assets/761506.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  
+}
+
+.App {
+  position: relative;
 }
 
 
@@ -25,8 +28,9 @@ button:hover {
 button {
   font-size: inherit;
   font-family: inherit;
-  padding: 5px;
+  padding: 7px;
   border: 2px solid black;
+  border-radius: 10px;
   background-color: unset;
 }
 
@@ -74,7 +78,33 @@ button {
   justify-content: center;
 }
 
+.victory-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 60%;
+  border-radius: 10px;
 
+  left: 0; 
+  right: 0;
+  top: 250px;
+  bottom: 0; 
+  margin: auto;
+
+  background-color: rgba(53, 255, 53, 0.823);
+}
+
+.btn-reset:hover {
+  background-color: rgba(46, 200, 46, 0.714);
+}
+
+.btn-reset {
+  font-size: 20px;
+  margin-top: 20px;
+}
 
 
 
