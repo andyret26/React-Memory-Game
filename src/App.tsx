@@ -3,11 +3,13 @@ import React from "react";
 import { CardType } from "./types";
 import Card from "./components/Card";
 import Timer from "./components/Timer";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import flagCodes from "./assets/flagCodes.json";
 import { useTimer } from "react-use-precision-timer";
+import BoardSizeSelect from "./components/BoardSizeSelect";
 
 function App() {
+  const [boardSize, setBoardSize] = useState<number>(4);
   const [cards, setCards] = useState<Array<CardType>>([]);
   const [selectedCards, setSelectedCards] = useState<Array<CardType>>([]);
   const [started, setStarted] = useState(false);
@@ -23,8 +25,7 @@ function App() {
   const timer = useTimer({ delay: 1000 }, timerRunning);
 
   function handleStart() {
-    const boardSize = 4;
-
+    const newCards = [];
     for (let i = 0; i < boardSize; i++) {
       const newCard = {
         id: crypto.randomUUID(),
@@ -32,11 +33,20 @@ function App() {
         flag: flagCodes.flags[Math.floor(i / 2)],
         fliped: false,
       };
-      cards.push(newCard);
-      // TODO: shuffle cards
+      newCards.push(newCard);
+      shuffleCards(newCards);
       setStarted(true);
       timer.start();
     }
+  }
+
+  function shuffleCards(cardArray: Array<CardType>) {
+    for (let i = cardArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [cardArray[i], cardArray[j]] = [cardArray[j], cardArray[i]];
+    }
+
+    setCards(cardArray);
   }
 
   function resetSelectedCards(newSelectedCards: Array<CardType>) {
@@ -69,7 +79,7 @@ function App() {
     if (newSelectedList[0].pair !== newSelectedList[1].pair) {
       setTimeout(() => {
         resetSelectedCards(newSelectedList);
-      }, 1500);
+      }, 1250);
     } else {
       const newScore = score + 1;
       setScore(newScore);
@@ -83,16 +93,25 @@ function App() {
   }
 
   function handleReset(): void {
-    setCards((prevCards) =>
-      prevCards.map((card) => {
-        return { ...card, fliped: false };
-      })
-    );
+    let newCards = [...cards];
+    newCards = newCards.map((card) => {
+      return { ...card, fliped: false };
+    });
+    setCards(newCards);
+    setTimeout(() => {
+      shuffleCards(newCards);
+    }, 500);
+
     // TODO: shuffle cards
     setVictory(false);
     setScore(0);
     setSeconds(0);
     timer.start();
+  }
+
+  function onSelectBoardSize(selectedSize: string) {
+    console.log(selectedSize);
+    setBoardSize(parseInt(selectedSize));
   }
 
   return (
@@ -108,13 +127,24 @@ function App() {
           </div>
         )}
       </div>
-
       {!started ? (
-        <button className="btn-start" onClick={() => handleStart()}>
-          <p>START GAME</p>
-        </button>
+        <>
+          <BoardSizeSelect
+            selectedBoardSize={boardSize}
+            onSelectBoardSize={onSelectBoardSize}
+          />
+          <button className="btn-start" onClick={() => handleStart()}>
+            <p>START GAME</p>
+          </button>
+        </>
       ) : (
-        <div className="board">
+        <div
+          className="board"
+          style={{
+            gridTemplateRows: `repeat(${Math.sqrt(boardSize)}, auto)`,
+            gridTemplateColumns: `repeat(${Math.sqrt(boardSize)}, auto)`,
+          }}
+        >
           {cards.map((card, index) => (
             <Card
               key={card.id}

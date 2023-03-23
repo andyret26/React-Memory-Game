@@ -9,7 +9,10 @@ interface Props {
 
 export default function Card({ card, index, handleClickCard }: Props) {
   return (
-    <button className="btn-card" onClick={() => handleClickCard(card, index)}>
+    <button
+      className={card.fliped ? "btn-card turned" : "btn-card"}
+      onClick={() => handleClickCard(card, index)}
+    >
       <div className="card-container">
         <div className={card.fliped ? "card flip" : "card"}>
           <div className="face card-front">
