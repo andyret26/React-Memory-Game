@@ -21,7 +21,7 @@ function App() {
     const runTimeSeconds = Math.floor(timer.getElapsedRunningTime() / 1000);
     setSeconds(runTimeSeconds);
   }, []);
-  // The callback will be called every 1000 milliseconds / 1s.
+
   const timer = useTimer({ delay: 1000 }, timerRunning);
 
   function handleStart() {
@@ -117,16 +117,13 @@ function App() {
   return (
     <div className="App">
       <div className="top-bar">
-        {!started ? (
-          <p>WELCOME</p>
-        ) : (
-          <div className="score">
-            <p>SCORE: </p>
-            <p>{score}</p>
-            <Timer seconds={seconds} />
-          </div>
-        )}
+        <div className="score">
+          <p>SCORE: </p>
+          <p>{score}</p>
+          <Timer seconds={seconds} />
+        </div>
       </div>
+
       {!started ? (
         <>
           <BoardSizeSelect

@@ -1,4 +1,5 @@
-import React from "react";
+import "./BoardSizeSelect.css";
+
 interface PageProps {
   selectedBoardSize: number;
   onSelectBoardSize: (value: string) => void;
@@ -8,10 +9,12 @@ export default function BoardSizeSelect({
   onSelectBoardSize,
 }: PageProps) {
   return (
-    <div>
-      <label htmlFor="grid-size-select">Select grid size:</label>
+    <div className="grid-size">
+      <label className="label" htmlFor="grid-size-select">
+        Select Board Size:
+      </label>
       <select
-        id="grid-size-select"
+        className="grid-size-select"
         value={selectedBoardSize}
         onChange={(event) => onSelectBoardSize(event.target.value)}
       >

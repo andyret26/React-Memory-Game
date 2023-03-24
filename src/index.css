@@ -55,14 +55,15 @@ button {
 }
 
 .btn-start:hover {
-  background-color: rgb(170, 170, 170);
+  background-color: rgb(140, 190, 154);
 }
 .btn-start {
-  font-size: 12px;
-  padding: 15px;
-  border: 2px solid rgb(140, 140, 140);
+  width: 250px;
+  font-size: 14px;
+  padding: 10px;
+  border: 2px solid rgb(50, 90, 50);
   border-radius: 10px;
-  background-color: rgb(200, 200, 200);
+  background-color: rgb(162,217,177);
 }
 
 .btn-start > p {
