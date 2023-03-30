@@ -4,7 +4,7 @@ import { CardType } from "./types";
 import Card from "./components/Card";
 import Timer from "./components/Timer";
 import { useState } from "react";
-import flagCodes from "./assets/flagCodes.json";
+import flagCodes from "../public/assets/flagCodes.json";
 import { useTimer } from "react-use-precision-timer";
 import BoardSizeSelect from "./components/BoardSizeSelect";
 

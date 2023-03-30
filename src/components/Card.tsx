@@ -16,7 +16,10 @@ export default function Card({ card, index, handleClickCard }: Props) {
       <div className="card-container">
         <div className={card.fliped ? "card flip" : "card"}>
           <div className="face card-front">
-            <img src={`/src/assets/flags/${card.flag}.png`} alt={card.flag} />
+            <img
+              src={`/public/assets/flags/${card.flag}.png`}
+              alt={card.flag}
+            />
           </div>
 
           <div className="face card-back"></div>
