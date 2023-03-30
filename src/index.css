@@ -6,7 +6,7 @@
   display: flex;
   justify-content: center;
   text-align: center;
-  background-image: url(/public/assets/00018.png);
+  background-image: url("/assets/00018.png");
   background-repeat: no-repeat;
   background-size: cover;
 }

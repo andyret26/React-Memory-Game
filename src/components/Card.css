@@ -47,7 +47,7 @@
 }
 
 .card .card-back {
-  background-image: url("/public/assets/Europe.jpg");
+  background-image: url("/assets/Europe.jpg");
   /* background-color: rebeccapurple; */
   background-repeat: no-repeat;
   background-size: contain;
